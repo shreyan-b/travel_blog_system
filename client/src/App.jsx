@@ -9,12 +9,21 @@ import PostList from "./pages/PostList";
 import Layout from "./components/Layout";
 import PostDetail from "./pages/PostDetail";
 import EditPost from './pages/EditPost';
+import MyPosts from './pages/MyPosts';
+import AdminDashboard from './pages/AdminDashboard';
 
 
 
 const PrivateRoute = () => {
   const { user } = useContext(AuthContext);
   return user ? <Outlet /> : <Navigate to="/" replace />;
+};
+
+const AdminRoute = () => {
+  const { user } = useContext(AuthContext);
+  if (!user) return <Navigate to="/" replace />;
+  if (user.role !== 'admin') return <Navigate to="/home" replace />;
+  return <Outlet />;
 };
 
 const MainLayout = () => (
@@ -38,8 +47,14 @@ function App() {
           <Route path="/posts" element={<PostList />} />
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/edit-post/:id" element={<EditPost />} />
+          <Route path="/my-posts" element={<MyPosts />} />
+        </Route>
 
-
+        {/* Admin route - also uses MainLayout */}
+        <Route element={<AdminRoute />}>
+          <Route element={<MainLayout />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

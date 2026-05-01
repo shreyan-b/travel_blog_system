@@ -6,10 +6,14 @@ import { AuthContext } from "../context/AuthContext";
 import "./PostCreate.css";
 
 const categories = [
+  "Adventure",
+  "Food",
+  "Culture",
+  "Nature",
+  "City",
   "Technology",
   "Lifestyle",
   "Travel",
-  "Food",
   "Health",
   "Science",
   "Education",
@@ -27,14 +31,16 @@ const CreatePost = () => {
   const location = useLocation();
   const { user } = useContext(AuthContext); // Access user context to get token
   const urlParams = new URLSearchParams(location.search);
-  const initialCategory = urlParams.get("category") || "Technology";
+  const initialCategory = urlParams.get("category") || "Adventure";
 
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    category: initialCategory,
+    category: initialCategory === "All" ? "Adventure" : initialCategory,
     imageUrl: "",
   });
+
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,11 +66,36 @@ const CreatePost = () => {
         throw new Error("User not authenticated");
       }
       const newPost = await API.createPost(formData, user.token);
-      navigate("/home", { state: { newPost } });
+      setSubmitted(true);
+      // Navigate after a short delay to show the message
+      setTimeout(() => {
+        navigate("/home", { state: { newPost } });
+      }, 2000);
     } catch (error) {
       console.error("Create post failed:", error);
     }
   };
+
+  if (submitted) {
+    return (
+      <div className="post-form" style={{ textAlign: "center", paddingTop: "80px" }}>
+        <div style={{
+          padding: "30px",
+          backgroundColor: "#fff3e0",
+          borderRadius: "12px",
+          border: "2px solid #ffcc80",
+        }}>
+          <h2 style={{ color: "#e65100", marginBottom: "10px" }}>📝 Post Submitted!</h2>
+          <p style={{ fontSize: "1.1rem", color: "#555" }}>
+            Your post is under review and will be visible once approved by an admin.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "#888", marginTop: "10px" }}>
+            Redirecting to home...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
   

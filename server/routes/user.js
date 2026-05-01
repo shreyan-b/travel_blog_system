@@ -10,10 +10,12 @@ router.get('/profile', verifyToken, async (req, res) => {
     const user = await User.findById(userId).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Send name instead of username
+    // Send name instead of username, include role
     res.json({
+      id: user._id,
       name: user.username,
       email: user.email,
+      role: user.role,
     });
   } catch (error) {
     console.error("Error fetching profile:", error);

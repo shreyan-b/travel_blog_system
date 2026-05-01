@@ -45,6 +45,11 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Check if user is suspended
+    if (user.isSuspended) {
+      return res.status(403).json({ message: "Your account has been suspended. Contact admin for assistance." });
+    }
+
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
@@ -63,7 +68,8 @@ router.post('/login', async (req, res) => {
       user: {
         id: user._id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     };
     

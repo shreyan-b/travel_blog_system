@@ -5,6 +5,9 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/user.js';
+import likeRoutes from './routes/likes.js';
+import commentRoutes from './routes/comments.js';
+import adminRoutes from './routes/admin.js';
 import path from "path";
 import fs from "fs";
 
@@ -40,6 +43,9 @@ app.use('/api', (req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/likes', likeRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/admin', adminRoutes);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // MongoDB connection

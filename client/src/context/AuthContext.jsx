@@ -21,23 +21,27 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
-        // If token payload already includes username/email use it, otherwise fetch profile
-        if (decoded.username && decoded.email) {
-          setUser({ id: decoded.id, token, username: decoded.username, email: decoded.email });
-          console.log("Set user from token payload:", decoded.id);
-        } else {
-          // fetch profile from server as fallback
-          API.getUserProfile(token)
-            .then((profile) => {
-              setUser({ id: profile.id || decoded.id, token, username: profile.username || profile.name || profile.email, email: profile.email });
-              console.log("Set user from profile API:", profile);
-            })
-            .catch((err) => {
-              console.error("Failed to fetch profile:", err);
-              // still set minimal user from token
-              setUser({ id: decoded.id, token });
+        // Always fetch profile to get latest role and info
+        API.getUserProfile(token)
+          .then((profile) => {
+            setUser({
+              id: profile.id || decoded.id,
+              token,
+              username: profile.name || profile.username || decoded.username,
+              email: profile.email || decoded.email,
+              role: profile.role || 'user',
             });
-        }
+            console.log("Set user from profile API:", profile);
+          })
+          .catch((err) => {
+            console.error("Failed to fetch profile:", err);
+            // still set minimal user from token
+            if (decoded.username && decoded.email) {
+              setUser({ id: decoded.id, token, username: decoded.username, email: decoded.email, role: 'user' });
+            } else {
+              setUser({ id: decoded.id, token, role: 'user' });
+            }
+          });
       } catch (error) {
         console.error("Error decoding token:", error);
         setUser(null);
@@ -56,6 +60,7 @@ export const AuthProvider = ({ children }) => {
         id: serverUser?.id || decoded.id,
         username: serverUser?.username || decoded.username,
         email: serverUser?.email || decoded.email,
+        role: serverUser?.role || 'user',
         token: userData.token,
       };
       setUser(user);
