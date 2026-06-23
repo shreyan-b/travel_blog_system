@@ -1,6 +1,6 @@
 # InkPulse
 
-InkPulse is a full-stack travel blogging platform built with the MERN stack. It allows users to create, browse, like, and comment on travel stories, while admins can moderate posts and manage users.
+InkPulse is a full-stack travel blogging platform built using the MERN stack. It enables users to create, browse, like, and comment on travel stories, while providing administrators with tools to approve posts, moderate content, and manage users. The application supports JWT-based authentication, image uploads, post search and filtering, nested comment replies, and dedicated dashboards for both users and admins.
 
 ## Features
 
@@ -28,102 +28,112 @@ InkPulse is a full-stack travel blogging platform built with the MERN stack. It 
 travel_blog_system/
 ├── client/      # React frontend
 └── server/      # Express backend
+```
 
-Getting Started
-Prerequisites
+## Getting Started
 
-    Node.js
-    MongoDB
-    npm
+### Prerequisites
 
-Installation
-bash
+- Node.js
+- MongoDB
+- npm
 
+### Installation
+
+```bash
 git clone https://github.com/shreyan-b/travel_blog_system.git
 cd travel_blog_system
+```
 
-Install frontend dependencies
-bash
+### Install frontend dependencies
 
+```bash
 cd client
 npm install
+```
 
-Install backend dependencies
-bash
+### Install backend dependencies
 
+```bash
 cd ../server
 npm install
+```
 
-Environment Variables
+## Environment Variables
 
-Create a .env file inside the server folder:
-env
+Create a `.env` file inside the `server` folder:
 
+```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+```
 
-Run the app
-Start backend
-bash
+## Run the app
 
+### Start backend
+
+```bash
 cd server
 npm start
+```
 
-Start frontend
-bash
+### Start frontend
 
+```bash
 cd client
 npm run dev
+```
 
-API Endpoints
-Auth
+## API Endpoints
 
-    POST /api/auth/signup
-    POST /api/auth/login
+### Auth
 
-User
+- `POST /api/auth/signup`
+- `POST /api/auth/login`
 
-    GET /api/user/profile
+### User
 
-Posts
+- `GET /api/user/profile`
 
-    GET /api/posts
-    GET /api/posts/:id
-    POST /api/posts
-    PUT /api/posts/:id
-    DELETE /api/posts/:id
-    GET /api/posts/my-posts
-    POST /api/posts/upload-image
+### Posts
 
-Likes
+- `GET /api/posts`
+- `GET /api/posts/:id`
+- `POST /api/posts`
+- `PUT /api/posts/:id`
+- `DELETE /api/posts/:id`
+- `GET /api/posts/my-posts`
+- `POST /api/posts/upload-image`
 
-    POST /api/likes/:blogId
-    GET /api/likes/:blogId/status
-    GET /api/likes/:blogId/count
+### Likes
 
-Comments
+- `POST /api/likes/:blogId`
+- `GET /api/likes/:blogId/status`
+- `GET /api/likes/:blogId/count`
 
-    GET /api/comments/:blogId
-    POST /api/comments/:blogId
-    DELETE /api/comments/:commentId
+### Comments
 
-Admin
+- `GET /api/comments/:blogId`
+- `POST /api/comments/:blogId`
+- `DELETE /api/comments/:commentId`
 
-    GET /api/admin/stats
-    GET /api/admin/posts/pending
-    GET /api/admin/posts/approved
-    PUT /api/admin/posts/:id/approve
-    PUT /api/admin/posts/:id/reject
-    DELETE /api/admin/posts/:id
-    GET /api/admin/users
-    PUT /api/admin/users/:id/suspend
-    PUT /api/admin/users/:id/unsuspend
-    DELETE /api/admin/users/:id
+### Admin
 
-Notes
+- `GET /api/admin/stats`
+- `GET /api/admin/posts/pending`
+- `GET /api/admin/posts/approved`
+- `PUT /api/admin/posts/:id/approve`
+- `PUT /api/admin/posts/:id/reject`
+- `DELETE /api/admin/posts/:id`
+- `GET /api/admin/users`
+- `PUT /api/admin/users/:id/suspend`
+- `PUT /api/admin/users/:id/unsuspend`
+- `DELETE /api/admin/users/:id`
 
-    Posts created by users start as pending
-    Admin approval is required before posts appear publicly
-    Uploaded images are served from /uploads
-    Comments support replies
+## Notes
+
+- Posts created by users start as pending
+- Admin approval is required before posts appear publicly
+- Uploaded images are served from `/uploads`
+- Comments support replies
