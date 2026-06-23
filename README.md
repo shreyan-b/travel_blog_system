@@ -1,75 +1,129 @@
-InkPulse Blog Application
-Overview
+# InkPulse
 
-InkPulse is a full-stack blogging platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). It provides a modern interface for creating, reading, and managing blog posts with user authentication.
-Project Structure
+InkPulse is a full-stack travel blogging platform built with the MERN stack. It allows users to create, browse, like, and comment on travel stories, while admins can moderate posts and manage users.
 
-inkpulse/
-├── client/           # Frontend React application
-└── server/           # Backend Node.js server
+## Features
 
-Features
+- User authentication with JWT
+- Create, edit, and delete blog posts
+- Image upload support
+- Search, filter, and sort posts
+- Like and comment on posts
+- Nested comment replies
+- Personal dashboard for your own posts
+- Admin dashboard for post approval and user management
+- Responsive UI built with React and Material UI
 
-    User Authentication
-    Blog Post Management
-    Category Organization
-    Responsive Design
-    JWT-based Security
-    MongoDB Integration
+## Tech Stack
+
+- Frontend: React, Vite, React Router, Material UI, Axios
+- Backend: Node.js, Express.js
+- Database: MongoDB, Mongoose
+- Authentication: JWT, bcrypt
+- File Uploads: multer
+
+## Project Structure
+
+```bash
+travel_blog_system/
+├── client/      # React frontend
+└── server/      # Express backend
 
 Getting Started
 Prerequisites
 
-    Node.js (v14 or higher)
+    Node.js
     MongoDB
-    npm or yarn
+    npm
 
 Installation
+bash
 
-    Clone the repository
+git clone https://github.com/shreyan-b/travel_blog_system.git
+cd travel_blog_system
 
-git clone https://github.com/your-username/FSD.git
-cd inkpulse
+Install frontend dependencies
+bash
 
-    Install Server Dependencies
+cd client
+npm install
+
+Install backend dependencies
+bash
+
+cd ../server
+npm install
+
+Environment Variables
+
+Create a .env file inside the server folder:
+env
+
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+
+Run the app
+Start backend
+bash
 
 cd server
-npm install
-
-    Configure Server Environment Create .env file in server directory with:
-
-PORT=8000
-ACCESS_SECRET_KEY=your_access_secret
-REFRESH_SECRET_KEY=your_refresh_secret
-DB_USERNAME=your_mongodb_username
-DB_PASSWORD=your_mongodb_password
-MONGODB_URI=your_mongodb_uri
-
-    Install Client Dependencies
-
-cd ../client
-npm install
-
-    Start Development Servers
-
-# Start server (from server directory)
 npm start
 
-# Start client (from client directory)
-npm start
+Start frontend
+bash
 
-Tech Stack
+cd client
+npm run dev
 
-    Frontend: React.js, Material-UI
-    Backend: Node.js, Express.js
-    Database: MongoDB
-    Authentication: JWT
-    API: REST
+API Endpoints
+Auth
 
-Contributing
+    POST /api/auth/signup
+    POST /api/auth/login
 
-    Fork the repository
-    Create your feature branch
-    Commit your changes
-    Push to the branch
-    Open a Pull Request
+User
+
+    GET /api/user/profile
+
+Posts
+
+    GET /api/posts
+    GET /api/posts/:id
+    POST /api/posts
+    PUT /api/posts/:id
+    DELETE /api/posts/:id
+    GET /api/posts/my-posts
+    POST /api/posts/upload-image
+
+Likes
+
+    POST /api/likes/:blogId
+    GET /api/likes/:blogId/status
+    GET /api/likes/:blogId/count
+
+Comments
+
+    GET /api/comments/:blogId
+    POST /api/comments/:blogId
+    DELETE /api/comments/:commentId
+
+Admin
+
+    GET /api/admin/stats
+    GET /api/admin/posts/pending
+    GET /api/admin/posts/approved
+    PUT /api/admin/posts/:id/approve
+    PUT /api/admin/posts/:id/reject
+    DELETE /api/admin/posts/:id
+    GET /api/admin/users
+    PUT /api/admin/users/:id/suspend
+    PUT /api/admin/users/:id/unsuspend
+    DELETE /api/admin/users/:id
+
+Notes
+
+    Posts created by users start as pending
+    Admin approval is required before posts appear publicly
+    Uploaded images are served from /uploads
+    Comments support replies
